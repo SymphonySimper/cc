@@ -1,1 +1,1 @@
-pub mod problems;
+pub mod leet;
