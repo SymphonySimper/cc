@@ -1,3 +1,5 @@
+// Merge strings merge alternately
+
 // Peekable
 // pub fn merge_alternately(word1: String, word2: String) -> String {
 //     let mut word1 = word1.chars().peekable();
@@ -30,24 +32,28 @@ pub fn merge_alternately(word1: String, word2: String) -> String {
         .collect()
 }
 
-#[test]
-fn test_1() {
-    assert_eq!(
-        merge_alternately("abc".to_string(), "pqr".to_string()),
-        "apbqcr"
-    )
-}
-#[test]
-fn test_2() {
-    assert_eq!(
-        merge_alternately("ab".to_string(), "pqrs".to_string()),
-        "apbqrs"
-    )
-}
-#[test]
-fn test_3() {
-    assert_eq!(
-        merge_alternately("abcd".to_string(), "pq".to_string()),
-        "apbqcd"
-    )
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_1() {
+        assert_eq!(
+            merge_alternately("abc".to_string(), "pqr".to_string()),
+            "apbqcr"
+        )
+    }
+    #[test]
+    fn test_2() {
+        assert_eq!(
+            merge_alternately("ab".to_string(), "pqrs".to_string()),
+            "apbqrs"
+        )
+    }
+    #[test]
+    fn test_3() {
+        assert_eq!(
+            merge_alternately("abcd".to_string(), "pq".to_string()),
+            "apbqcd"
+        )
+    }
 }
