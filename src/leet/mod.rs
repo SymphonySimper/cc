@@ -1,1 +1,3 @@
-pub mod problems;
+pub mod easy;
+pub mod hard;
+pub mod medium;
