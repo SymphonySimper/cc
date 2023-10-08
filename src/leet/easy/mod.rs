@@ -2,6 +2,7 @@ pub mod qn_1071;
 pub mod qn_1431;
 pub mod qn_1512;
 pub mod qn_1768;
+pub mod qn_2894;
 pub mod qn_345;
 pub mod qn_383;
 pub mod qn_557;
