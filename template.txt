@@ -1,0 +1,42 @@
+use std::io::stdin;
+
+#[allow(dead_code)]
+fn get_input() -> String {
+    let mut input = String::new();
+    stdin().read_line(&mut input).expect("Failed to read input");
+
+    input.trim().to_string()
+}
+
+#[allow(dead_code)]
+fn parse<T: std::str::FromStr>(input: impl Into<String>) -> T
+where
+    <T as std::str::FromStr>::Err: std::fmt::Debug,
+{
+    let input = input.into();
+    input.parse::<T>().unwrap()
+}
+
+#[allow(dead_code)]
+fn split_and_parse<T: std::str::FromStr>(input: String) -> Vec<T>
+where
+    <T as std::str::FromStr>::Err: std::fmt::Debug,
+{
+    input.split_whitespace().map(|v| parse(v)).collect()
+}
+
+#[allow(dead_code)]
+fn run() {
+    let t: i32 = parse(get_input());
+    for _ in 0..t {
+        solve();
+    }
+}
+
+fn solve() {
+    // Solution goes here
+}
+
+fn main() {
+    run();
+}
