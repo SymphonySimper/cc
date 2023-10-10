@@ -1,23 +1,27 @@
 use std::fmt::Debug;
+use std::io::prelude::*;
 #[allow(unused_imports)]
 use std::io::{self, BufReader};
-use std::io::{prelude::*, Lines};
 use std::str::FromStr;
 
 pub struct Solution<'a> {
-    lines: Lines<BufReader<&'a mut dyn Read>>,
+    input: BufReader<&'a mut dyn Read>,
     output: &'a mut dyn Write,
 }
 
 impl<'a> Solution<'a> {
     pub fn new(input: &'a mut dyn Read, output: &'a mut dyn Write) -> Self {
         Self {
-            lines: BufReader::new(input).lines(),
+            input: BufReader::new(input),
             output,
         }
     }
     pub fn get_input(&mut self) -> String {
-        self.lines.next().unwrap().unwrap().trim().to_string()
+        let mut input = String::new();
+        self.input
+            .read_line(&mut input)
+            .expect("Couldn't read input");
+        input.trim().to_string()
     }
 
     pub fn parse<T: FromStr>(input: impl Into<String>) -> T
