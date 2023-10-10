@@ -25,18 +25,13 @@ where
     input.split_whitespace().map(|v| parse(v)).collect()
 }
 
-#[allow(dead_code)]
-fn run() {
+fn solve() {
     let t: i32 = parse(get_input());
     for _ in 0..t {
-        solve();
+      // Solution goes here
     }
 }
 
-fn solve() {
-    // Solution goes here
-}
-
 fn main() {
-    run();
+    solve();
 }
