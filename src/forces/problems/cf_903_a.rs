@@ -36,17 +36,8 @@ impl<'a> Solution<'a> {
     pub fn solve(&mut self) {
         if let Ok(t) = self.get_input().unwrap().parse::<usize>() {
             for _ in 0..t {
-                let [n, m] = self
-                    .get_input()
-                    .unwrap()
-                    .split_whitespace()
-                    .map(|v| v.parse::<u8>().unwrap())
-                    .collect::<Vec<u8>>()[0..2]
-                else {
-                    panic!("Expected 2 inputs");
-                };
+                let _ = self.get_input();
 
-                let difference = n.max(m) - n.min(m);
                 let mut x = self.get_input().unwrap();
                 let s = self.get_input().unwrap();
                 let mut i = 0;
@@ -55,7 +46,7 @@ impl<'a> Solution<'a> {
                     if x.contains(&s) {
                         self.print(i);
                         break;
-                    } else if i > difference || x.len() > 25 {
+                    } else if x.len() > 25 {
                         self.print(-1);
                         break;
                     }
