@@ -78,32 +78,31 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::fs::File;
-    use std::path::Path;
 
-    #[test]
-    fn test() {
-        let name_only = Path::new(file!())
-            .file_stem()
-            .and_then(|s| s.to_str())
-            .unwrap();
-        let mut f = File::open(format!("src/timus/problems/testcase/{name_only}.txt"))
-            .expect("correct test");
+    fn run_solve(input: &str, output: &str) {
+        let mut cursor = io::Cursor::new(input);
         let mut buf: Vec<u8> = Vec::new();
 
-        let mut solution = Solution::new(&mut f, &mut buf);
+        let mut solution = Solution::new(&mut cursor, &mut buf);
         solution.solve();
 
         let res = String::from_utf8(buf).expect("valid string");
 
-        assert_eq!(
-            res,
-            "2297.0716
+        assert_eq!(res, output);
+    }
+
+    #[test]
+    fn test_1() {
+        let input = "1427  0   
+
+   876652098643267843 
+5276538
+";
+        let output = "2297.0716
 936297014.1164
 0.0000
 37.7757
-"
-        );
+";
+        run_solve(input, output);
     }
 }
-

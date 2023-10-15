@@ -71,28 +71,59 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::fs::File;
-    use std::path::Path;
 
-    #[test]
-    fn test() {
-        let name_only = Path::new(file!())
-            .file_stem()
-            .and_then(|s| s.to_str())
-            .unwrap();
-        let mut f = File::open(format!("src/forces/problems/testcase/{name_only}.txt"))
-            .expect("correct test");
+    fn run_solve(input: &str, output: &str) {
+        let mut cursor = io::Cursor::new(input);
         let mut buf: Vec<u8> = Vec::new();
 
-        let mut solution = Solution::new(&mut f, &mut buf);
+        let mut solution = Solution::new(&mut cursor, &mut buf);
         solution.solve();
 
         let res = String::from_utf8(buf).expect("valid string");
 
-        // TODO: Add testcase output
-        assert_eq!(
-            res,
-            "3
+        assert_eq!(res, output);
+    }
+
+    #[test]
+    fn test_1() {
+        let input = "12
+1 5
+a
+aaaaa
+5 5
+eforc
+force
+2 5
+ab
+ababa
+3 5
+aba
+ababa
+4 3
+babb
+bbb
+5 1
+aaaaa
+a
+4 2
+aabb
+ba
+2 8
+bk
+kbkbkbkb
+12 2
+fjdgmujlcont
+tf
+2 2
+aa
+aa
+3 5
+abb
+babba
+1 19
+m
+mmmmmmmmmmmmmmmmmmm";
+        let output = "3
 1
 2
 -1
@@ -104,7 +135,8 @@ mod tests {
 0
 2
 5
-"
-        );
+";
+
+        run_solve(input, output);
     }
 }

@@ -1,44 +1,30 @@
-use std::fmt::Debug;
-#[allow(unused_imports)]
+use std::io::prelude::*;
 use std::io::{self, BufReader};
-use std::io::{prelude::*, Lines};
-use std::str::FromStr;
 
 pub struct Solution<'a> {
-    lines: Lines<BufReader<&'a mut dyn Read>>,
+    input: BufReader<&'a mut dyn Read>,
     output: &'a mut dyn Write,
 }
 
 impl<'a> Solution<'a> {
     pub fn new(input: &'a mut dyn Read, output: &'a mut dyn Write) -> Self {
         Self {
-            lines: BufReader::new(input).lines(),
+            input: BufReader::new(input),
             output,
         }
     }
-    pub fn get_input(&mut self) -> String {
-        self.lines.next().unwrap().unwrap().trim().to_string()
-    }
 
-    pub fn parse<T: FromStr>(input: impl Into<String>) -> T
-    where
-        <T as FromStr>::Err: Debug,
-    {
-        let input = input.into();
-        input.parse::<T>().unwrap()
-    }
+    pub fn get_input(&mut self) -> Option<String> {
+        let mut input = String::new();
+        if let Ok(eof) = self.input.read_line(&mut input) {
+            if eof == 0 {
+                return None;
+            }
 
-    pub fn split_and_parse<T: FromStr>(&mut self, input: Option<String>) -> Vec<T>
-    where
-        <T as FromStr>::Err: Debug,
-    {
-        let input = if let Some(text) = input {
-            text
+            Some(input.trim().to_string())
         } else {
-            Self::get_input(self)
-        };
-
-        input.split_whitespace().map(|v| Self::parse(v)).collect()
+            None
+        }
     }
 
     pub fn print<T: std::fmt::Display>(&mut self, text: T) {
@@ -48,8 +34,17 @@ impl<'a> Solution<'a> {
 
 impl<'a> Solution<'a> {
     pub fn solve(&mut self) {
-        let sum: i32 = Self::split_and_parse(self, None).iter().sum();
-        Self::print(self, sum);
+        let [n, a, b] = self
+            .get_input()
+            .unwrap()
+            .split_whitespace()
+            .map(|v| v.parse().unwrap())
+            .collect::<Vec<i32>>()[..3]
+        else {
+            panic!("Expected 3 integers")
+        };
+
+        self.print(n * a * b);
     }
 }
 
@@ -79,8 +74,8 @@ mod tests {
 
     #[test]
     fn test_1() {
-        let input = "1 5";
-        let output = "6\n";
+        let input = "5 2 3";
+        let output = "60\n";
 
         run_solve(input, output);
     }
