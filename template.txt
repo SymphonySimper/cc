@@ -49,30 +49,25 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::fs::File;
-    use std::path::Path;
 
-    #[test]
-    fn test() {
-        let file_path = Path::new(file!());
-        let crate_name = file_path
-            .to_str()
-            .unwrap()
-            .split('/')
-            .collect::<Vec<&str>>()[1];
-        let name_only = file_path.file_stem().and_then(|s| s.to_str()).unwrap();
-        let mut f = File::open(format!(
-            "src/{crate_name}/problems/testcase/{name_only}.txt"
-        ))
-        .expect("correct test");
+    fn run_solve(input: &str, output: &str) {
+        let mut cursor = io::Cursor::new(input);
         let mut buf: Vec<u8> = Vec::new();
 
-        let mut solution = Solution::new(&mut f, &mut buf);
+        let mut solution = Solution::new(&mut cursor, &mut buf);
         solution.solve();
 
         let res = String::from_utf8(buf).expect("valid string");
 
-        // TODO: Add testcase output
-        assert_eq!(res, "");
+        assert_eq!(res, output);
+    }
+
+    #[test]
+    fn test_1() {
+        //TODO: Add testcase input and output
+        let input = "";
+        let output = "";
+
+        run_solve(input, output);
     }
 }
