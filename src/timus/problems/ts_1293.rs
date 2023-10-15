@@ -34,17 +34,13 @@ impl<'a> Solution<'a> {
 
 impl<'a> Solution<'a> {
     pub fn solve(&mut self) {
-        let [n, a, b] = self
+        let ans = self
             .get_input()
             .unwrap()
             .split_whitespace()
             .map(|v| v.parse().unwrap())
-            .collect::<Vec<i32>>()[..3]
-        else {
-            panic!("Expected 3 integers")
-        };
-
-        self.print(n * a * b);
+            .collect::<Vec<i32>>();
+        self.print(ans[0] * (2 * ans[1] * ans[2]));
     }
 }
 

@@ -56,13 +56,12 @@ impl<'a> Solution<'a> {
         let mut values: Vec<f64> = Vec::new();
         while let Some(text) = Self::get_input(self) {
             for v in text.split_whitespace() {
-                values.push(v.parse::<f64>().unwrap());
+                values.push(v.parse::<f64>().unwrap().sqrt());
             }
         }
 
-        values.reverse();
-        for value in values {
-            self.print(format!("{:.4}", value.sqrt()))
+        for i in (0..values.len()).rev() {
+            self.print(format!("{:.4}", values[i]))
         }
     }
 }
