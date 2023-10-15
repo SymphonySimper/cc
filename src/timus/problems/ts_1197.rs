@@ -38,6 +38,7 @@ impl<'a> Solution<'a> {
         let t: u8 = self.get_input().unwrap().parse().unwrap();
 
         for _ in 0..t {
+            // Converting all the inputs to range between 1-4
             let positions = self
                 .get_input()
                 .unwrap()
