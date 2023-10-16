@@ -45,7 +45,7 @@ impl<'a> Solution<'a> {
                 .chars()
                 .map(|c| {
                     let val = c.to_digit(18).unwrap() as i8;
-                    if val > 14 {
+                    if val > 13 {
                         // e, f, g, h
                         18 - val
                     } else if val > 9 {
@@ -61,24 +61,24 @@ impl<'a> Solution<'a> {
                 })
                 .collect::<Vec<i8>>();
 
-            // Here we are calculating how many 3x3 squares can be formed
-            let mut square_count = 0;
-            for n in &positions {
-                if n + 3 < 10 {
-                    square_count += 1;
-                }
-                if n - 3 >= 0 {
-                    square_count += 1;
-                }
-            }
-
             let a = positions[0];
             let b = positions[1];
-            let ans = match (a, b) {
-                (1, 1) => square_count,
-                (1, _) | (_, 1) => square_count + 1,
-                _ => square_count * 2,
-            };
+
+            let ans = a
+                + b
+                + match (a, b) {
+                    (4, 1) | (1, 4) => -1,
+                    (3, 3) => 2,
+                    (3, _) | (_, 3) => {
+                        if a == 1 || b == 1 {
+                            0
+                        } else {
+                            1
+                        }
+                    }
+
+                    _ => 0,
+                };
 
             self.print(ans);
         }
@@ -143,6 +143,13 @@ c3";
 8
 ";
 
+        run_solve(input, output);
+    }
+
+    #[test]
+    fn test_3() {
+        let input = "1\na3";
+        let output = "4\n";
         run_solve(input, output);
     }
 }
