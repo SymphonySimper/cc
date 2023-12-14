@@ -12,7 +12,7 @@ rustc --out-dir "builds" "$file_path"
 
 if [ ! -f "$input_file_name" ]; then
 	echo "Input for $file_path"
-	wl-paste >"$input_file_name"
+	wl-paste | sed '/^$/d' >"$input_file_name"
 fi
 
 echo "Running $binary_name"
