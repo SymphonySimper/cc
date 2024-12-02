@@ -50,20 +50,13 @@ impl<'a> Solution<'a> {
             b.push(split[1]);
         }
 
-        a.sort();
-        b.sort();
+        let sum_a = a.iter().sum::<u32>();
+        let sum_b = b.iter().sum::<u32>();
 
-        let mut sum: u32 = 0;
-        for i in 0..a.len() {
-            let av = a[i];
-            let bv = b[i];
-
-            sum += match av.cmp(&bv) {
-                Ordering::Equal | Ordering::Greater => av - bv,
-                Ordering::Less => bv - av,
-            }
-        }
-
+        let sum = match sum_a.cmp(&sum_b) {
+            Ordering::Equal | Ordering::Greater => sum_a - sum_b,
+            Ordering::Less => sum_b - sum_a,
+        };
         self.print(sum)
     }
 }
