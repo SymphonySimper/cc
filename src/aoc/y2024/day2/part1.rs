@@ -50,6 +50,7 @@ impl<'a> Solution<'a> {
             for w in split.windows(2) {
                 let a = w[0];
                 let b = w[1];
+                let sub: u32;
 
                 match a.cmp(&b) {
                     Ordering::Equal => continue 'outer,
@@ -59,6 +60,7 @@ impl<'a> Solution<'a> {
                         } else {
                             direction = "inc";
                         }
+                        sub = a - b;
                     }
                     Ordering::Less => {
                         if direction == "inc" {
@@ -66,14 +68,8 @@ impl<'a> Solution<'a> {
                         } else {
                             direction = "dec";
                         }
+                        sub = b - a;
                     }
-                }
-
-                let sub: u32;
-                if a > b {
-                    sub = a - b;
-                } else {
-                    sub = b - a;
                 }
 
                 if !(sub >= 1 && sub <= 3) {
