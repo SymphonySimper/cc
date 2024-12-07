@@ -35,7 +35,7 @@ impl<'a> Solution<'a> {
     }
 }
 
-impl<'a> Solution<'a> {
+impl Solution<'_> {
     pub fn solve(&mut self) {
         // TODO: Add solution
     }
