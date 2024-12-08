@@ -9,3 +9,6 @@ run FILE:
 
 runc FILE:
     ./run.sh -c {{ FILE }}
+
+cp:
+  cat ./template.txt | wl-copy
