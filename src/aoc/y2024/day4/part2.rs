@@ -59,7 +59,7 @@ impl Solution<'_> {
         directions.push(
             [
                 (row_index - 1, index - 1), // top left
-                (row_index, index), // center
+                (row_index, index),         // center
                 (row_index + 1, index + 1), // bottom right
             ]
             .to_vec(),
@@ -69,7 +69,7 @@ impl Solution<'_> {
         directions.push(
             [
                 (row_index - 1, index + 1), // top right
-                (row_index, index), // center
+                (row_index, index),         // center
                 (row_index + 1, index - 1), // bottom left
             ]
             .to_vec(),
@@ -126,7 +126,6 @@ impl Solution<'_> {
                                 is_x = false;
                                 break;
                             }
-
                         }
 
                         if is_x {

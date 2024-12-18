@@ -1,9 +1,9 @@
 // Title: Day 4: Ceres Search
 // URL: https://adventofcode.com/2024/day/4
 
+use std::convert::TryFrom;
 use std::io::prelude::*;
 use std::io::{self, BufReader};
-use std::convert::TryFrom;
 
 pub struct Solution<'a> {
     input: BufReader<&'a mut dyn Read>,
