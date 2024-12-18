@@ -13,4 +13,7 @@ runc FILE:
     ./.scripts/run.sh -c {{ FILE }}
 
 cp:
-  cat ./template.txt | wl-copy
+    cat ./template.txt | wl-copy
+
+new PATH:
+    ./.scripts/new.sh {{ PATH }}
