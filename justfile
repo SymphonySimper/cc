@@ -5,10 +5,10 @@ testv FILE:
     cargo test {{ FILE }} -- --nocapture
 
 run FILE:
-    ./run.sh {{ FILE }}
+    ./.scripts/run.sh {{ FILE }}
 
 runc FILE:
-    ./run.sh -c {{ FILE }}
+    ./.scripts/run.sh -c {{ FILE }}
 
 cp:
   cat ./template.txt | wl-copy
