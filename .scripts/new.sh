@@ -105,6 +105,29 @@ function new_leet() {
   echo_success "${file}"
 }
 
+function new_forces() {
+  base_dir="./src/forces"
+
+  div="${path[1]}"
+  div_dir="${base_dir}/${div}"
+  if [[ ! "$div" =~ ^[a-g]{1}$ ]]; then
+    echo "\`${div}\` is not in the range of [a-g]"
+    exit 1
+  fi
+
+  challenge="${path[2]}"
+  challenge_name="cf_${div}${challenge}"
+  if [[ -z "$challenge" ]]; then
+    echo "Challenge name is not passed"
+    exit 1
+  fi
+
+  file="${div_dir}/${challenge_name}.rs"
+  template_to_file "$file"
+  add_to_mod "$challenge_name" "$div_dir"
+  echo_success "$file"
+}
+
 function new_timus() {
   base_dir="./src/timus"
 
@@ -126,5 +149,6 @@ case "${path[0]}" in
 aoc) new_aoc ;;
 leet) new_leet ;;
 timus) new_timus ;;
-*) echo "Supported platforms leet|aoc" ;;
+forces) new_forces ;;
+*) echo "Supported platforms aoc | leet | timus | forces" ;;
 esac
