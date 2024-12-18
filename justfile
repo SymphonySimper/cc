@@ -6,6 +6,9 @@ test FILE:
 testv FILE:
     cargo test {{ FILE }} -- --nocapture
 
+format:
+  cargo fmt
+
 run FILE:
     ./.scripts/run.sh {{ FILE }}
 
