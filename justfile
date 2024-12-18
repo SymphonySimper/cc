@@ -1,3 +1,5 @@
+set quiet := true
+
 test FILE:
     cargo test {{ FILE }}
 
