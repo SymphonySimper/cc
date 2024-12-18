@@ -100,19 +100,31 @@ function new_leet() {
   dir="./src/leet/${difficulty}"
   file="${dir}/${challenge_name}.rs"
 
-  if [[ -f "$file" ]]; then
-    echo "${file} already exists"
+  template_to_file "$file"
+  add_to_mod "${challenge_name}" "${dir}"
+  echo_success "${file}"
+}
+
+function new_timus() {
+  base_dir="./src/timus"
+
+  challenge="${path[1]}"
+  if [[ -z "$challenge" ]]; then
+    echo "Challenge number not mentioned"
     exit 1
   fi
 
-  template_to_file "$file"
-  add_to_mod "${challenge_name}" "${dir}"
+  challenge_name="ts_${challenge}"
+  file="${base_dir}/${challenge_name}.rs"
 
+  template_to_file "$file"
+  add_to_mod "${challenge_name}" "${base_dir}"
   echo_success "${file}"
 }
 
 case "${path[0]}" in
-aoc) new_aoc "$1" ;;
-leet) new_leet "$1" ;;
+aoc) new_aoc ;;
+leet) new_leet ;;
+timus) new_timus ;;
 *) echo "Supported platforms leet|aoc" ;;
 esac
