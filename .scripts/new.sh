@@ -9,23 +9,75 @@
 read -ra path < <(echo "$1" | tr ':' ' ')
 
 template_txt=$(<./template.txt)
+function template_to_file() {
+  if [[ -z "${1}" ]] || [[ -f "${1}" ]]; then
+    echo "Either \`${1}\` does already exists or was not passed"
+    exit 1
+  fi
+
+  echo "$template_txt" >"$1"
+}
 
 function add_to_mod() {
-  if [[ -z "$2" ]] && [[ ! -f "$2" ]]; then
+  mod_file="${2}/mod.rs"
+  if [[ -z "$2" ]] || [[ ! -f "${mod_file}" ]]; then
     echo "Either \`${2}\` does not exist or was not passed"
     exit 1
   fi
-  echo "pub mod $1" >>"$2"
+
+  echo "pub mod ${1};" >>"${mod_file}"
 }
 
 function echo_success() {
   echo "File created at $1"
-  cargo format;
+  just format
 }
 
 function new_aoc() {
   # TODO: add aoc
-  dir="./src/aoc"
+  base_dir="./src/aoc"
+
+  year="${path[1]}"
+  if [[ ! "$year" =~ ^[0-9]{4}$ ]]; then
+    echo "\`$year\` is not a valid year!"
+    exit 1
+  fi
+
+  year_name="y${year}"
+  year_dir="${base_dir}/${year_name}"
+  if [[ ! -d "$year_dir" ]]; then
+    mkdir "$year_dir"
+    add_to_mod "$year_name" "$base_dir"
+  fi
+
+  day="${path[2]}"
+  if [[ ! "$day" =~ ^[0-9]{1,2}$ ]]; then
+    echo "\`$day\` is not a valid day!"
+    exit 1
+  fi
+
+  day_name="day${day}"
+  day_dir="${year_dir}/${day_name}"
+  if [[ ! -d "$day_dir" ]]; then
+    mkdir "$day_dir"
+    add_to_mod "$day_name" "$year_dir"
+  fi
+
+  part1_name="part1"
+  part1_file="${day_dir}/${part1_name}.rs"
+  if [[ ! -f "$part1_file" ]]; then
+    template_to_file "$part1_file"
+    add_to_mod "$part1_name" "$day_dir"
+    echo_success "$part1_file"
+  fi
+
+  part2_name="part2"
+  part2_file="${day_dir}/${part2_name}.rs"
+  if [[ ! -f "$part2_file" ]]; then
+    template_to_file "$part2_file"
+    add_to_mod "$part2_name" "$day_dir"
+    echo_success "$part2_file"
+  fi
 }
 
 function new_leet() {
@@ -46,7 +98,6 @@ function new_leet() {
 
   challenge_name="lt_${path[2]}"
   dir="./src/leet/${difficulty}"
-  file_mod="${dir}/mod.rs"
   file="${dir}/${challenge_name}.rs"
 
   if [[ -f "$file" ]]; then
@@ -54,10 +105,10 @@ function new_leet() {
     exit 1
   fi
 
-  echo "$template_txt" >"$file"
-  add_to_mod "$challenge_name" "$file_mod"
+  template_to_file "$file"
+  add_to_mod "${challenge_name}" "${dir}"
 
-  echo_success "$file"
+  echo_success "${file}"
 }
 
 case "${path[0]}" in
