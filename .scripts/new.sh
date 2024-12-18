@@ -20,6 +20,7 @@ function add_to_mod() {
 
 function echo_success() {
   echo "File created at $1"
+  cargo format;
 }
 
 function new_aoc() {
