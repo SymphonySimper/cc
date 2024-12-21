@@ -8,11 +8,17 @@
 # ex: leet:medium:5175
 read -ra path < <(echo "$1" | tr ':' ' ')
 
-template_txt=$(<./template.txt)
+template_dir="./.templates"
 function template_to_file() {
   if [[ -z "${1}" ]] || [[ -f "${1}" ]]; then
     echo "Either \`${1}\` does already exists or was not passed"
     exit 1
+  fi
+
+  if [[ "${path[0]}" == "leet" ]]; then
+    template_txt=$(<"${template_dir}/leet.rs")
+  else
+    template_txt=$(<${template_dir}/stdio.rs)
   fi
 
   echo "$template_txt" >"$1"
